@@ -1,0 +1,311 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{enumitem}
+\usepackage{setspace}
+\usepackage{graphicx}
+
+\setlength{\parskip}{0.6em}
+\setlength{\parindent}{0pt}
+\setcounter{secnumdepth}{3}
+
+\begin{document}
+
+%----------------- TITLE PAGE -----------------%
+\begin{titlepage}
+    \centering
+    \vspace*{3cm}
+
+    {\Large \textbf{Software Design Document}\par}
+    \vspace{0.5cm}
+    {\LARGE \textbf{Pineapple Chatbot}\par}
+
+    \vspace{1.5cm}
+    {\large Prepared by:\par}
+    {\large Kuong Thong, Enrique Castillo, Julio Aguilar, Jose Lopez, Yilin Ruan\par}
+
+    \vfill
+    {\large CSULA ITS Department\par}
+    \vspace*{1cm}
+\end{titlepage}
+
+%----------------- VERSION HISTORY -----------------%
+\section*{Version History}
+
+\begin{longtable}{>{\raggedright\arraybackslash}p{3cm}%
+                  >{\raggedright\arraybackslash}p{3cm}%
+                  >{\raggedright\arraybackslash}p{8cm}}
+\textbf{Version} & \textbf{Date} & \textbf{Summary of Changes} \\
+\hline
+apple       & 12/4/18  & Added Introduction sections (1.1--1.2). \\
+banana      & 12/5/18  & Added early DFD diagrams and transferred initial design content. \\
+cantaloupe  & 12/6/18  & Added database design and sections 8--9.1. \\
+dates       & 12/7/18  & Completed document draft and added validation sections. \\
+elderberry  & 1/3/19   & Updated DFDs to match current model. \\
+farkleberry & 3/13/19  & Updated feature descriptions and removed outdated content. \\
+grapefruit  & 3/22/19  & Cleaned document structure and updated sections 5--7. \\
+huckleberry & 9/25/19  & Updated crawling approach. \\
+jackfruit   & 11/15/19 & Removed Amazon Lex dependency. \\
+kiwi        & 12/2/19  & Updated models to reflect spaCy usage. \\
+\end{longtable}
+
+\newpage
+\tableofcontents
+\newpage
+
+
+%----------------- 1. INTRODUCTION -----------------%
+\section{Introduction}
+
+\subsection{Purpose}
+Pineapple Chatbot is an informational chatbot for a standalone web application that helps users
+find information related to the CSULA website. The chatbot processes user queries, responds
+with useful answers, and can receive user feedback.
+
+\subsection{Document Conventions}
+This document follows a structured SDD format with enumerated sections, module definitions,
+and design descriptions.
+
+\subsection{Intended Audience}
+This document is intended for developers, testers, designers, project managers, and documentation staff.
+
+\subsection{System Overview}
+The chatbot crawls university webpages, stores extracted information in a database, and uses
+natural-language processing to interpret user queries. It returns answers as text, links, or
+summaries.
+
+
+
+%----------------- 2. DESIGN CONSIDERATIONS -----------------%
+\section{Design Considerations}
+
+\subsection{Assumptions \& Dependencies}
+\begin{itemize}[nosep]
+    \item Backend built using Python.
+    \item Libraries: MySQL Connector, BeautifulSoup, nltk, ChatterBot, spaCy.
+    \item Additional dependencies: NodeJS, React (front-end).
+\end{itemize}
+
+\subsection{Constraints}
+\begin{itemize}[nosep]
+    \item Early versions lack spell-check, web abstraction, and high-accuracy NLP.
+    \item System quality depends on crawled data; vague queries may yield incorrect results.
+\end{itemize}
+
+\subsection{Goals}
+\begin{itemize}[nosep]
+    \item Provide helpful, conversational responses.
+    \item Keep design simple (KISS principle).
+    \item Provide detail without overwhelming users.
+    \item Maintain high user satisfaction.
+\end{itemize}
+
+\subsection{Development Methods}
+Pair programming and iterative testing were used to refine modules and improve accuracy.
+
+
+
+%----------------- 3. ARCHITECTURAL STRATEGY -----------------%
+\section{Architectural Strategy}
+
+Python is used for crawling, NLP, and chatbot logic due to its open-source ecosystem.  
+MySQL stores processed data because it integrates well with ChatterBot's SQL backends.  
+The chatbot runs inside a web application built with React, which manages user input and output.
+
+
+
+%----------------- 4. SYSTEM ARCHITECTURE -----------------%
+\section{System Architecture}
+
+\subsection{Level 0 DFD}
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.8\textwidth]{DFD_Level0_PineappleChatbot}
+    \caption{DFD Level 0 for Pineapple Chatbot}
+\end{figure}
+
+\subsection{Level 1 DFD}
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=\textwidth]{DFD_Level1_PineappleChatbot}
+    \caption{DFD Level 1 for Pineapple Chatbot}
+\end{figure}
+
+\subsection*{Modules}
+\begin{enumerate}
+    \item Input Module – Collects user inputs.
+    \item Preprocessor Module – Cleans and normalizes text.
+    \item Logic Module – Identifies user intent and selects a response.
+    \item Storage Module – Stores and retrieves crawled data.
+    \item Output Module – Formats and returns the answer to the user.
+\end{enumerate}
+
+\subsection*{Data Flow Summary}
+User query → Preprocessing → Intent recognition → Keyword lookup → Data retrieval → Response → User.
+
+
+
+%----------------- 5. POLICIES AND TACTICS -----------------%
+\section{Policies and Tactics}
+
+\subsection{Tools \& Technologies}
+ChatterBot, React, Python, MySQL.
+
+\subsection{Requirements Traceability}
+Crawled data is backed up regularly.
+
+\subsection{Testing Approach}
+User testing and QA validate accuracy and relevance of chatbot responses.
+
+\subsection{Engineering Trade-offs}
+Campus websites store large amounts of information; storing more data increases coverage but
+slows query speed.
+
+\subsection{Coding Standards}
+Standard Python and JavaScript conventions are followed; version control is used throughout.
+
+\subsection{Source Code Organization}
+\begin{itemize}[nosep]
+    \item \textbf{React App}: User interface
+    \item \textbf{Python Backend}: Chatbot logic and server
+    \item \textbf{Database}: MySQL storage
+\end{itemize}
+
+\subsection{System Build Instructions}
+\begin{enumerate}
+    \item Start VM
+    \item Run React frontend (npm start)
+    \item Run Python backend (python manage.py runserver)
+    \item Access chatbot via CSULA server interface
+\end{enumerate}
+
+
+
+%----------------- 6. DETAILED SYSTEM DESIGN -----------------%
+\section{Detailed System Design}
+
+\subsection{Input Module}
+Responsibilities: Convert user input into Statement objects.  
+Constraints: Must handle text and minimal structured formats.  
+Interactions: Passes processed input to Logic Module.
+
+\subsection{Preprocessor Module}
+Responsibilities: Clean whitespace, remove HTML artifacts, convert Unicode to ASCII.  
+Limitations: Must preserve important keywords.
+
+\subsection{Storage Module}
+Responsibilities: Store responses and crawled data.  
+Technologies: MySQL; SQLStorageAdapter recommended.  
+Limitations: Requires credentials; large datasets may slow queries.
+
+\subsection{Logic Module}
+Responsibilities include:
+\begin{itemize}[nosep]
+    \item Recognize intent
+    \item Identify keywords
+    \item Select best-matched response
+    \item Optionally evaluate time-based or mathematical queries
+\end{itemize}
+
+\subsection{Output Module}
+Responsibilities: Format and return final response to user through React UI.
+
+
+
+%----------------- 7. LOWER-LEVEL COMPONENT DESIGN -----------------%
+\section{Lower-Level Component Design}
+
+\subsection{Input Module Components}
+\begin{itemize}[nosep]
+    \item Creates Statement objects from input
+    \item Accepts text, dictionary, or Statement formats
+\end{itemize}
+
+\subsection{Output Module Components}
+\begin{itemize}[nosep]
+    \item Returns Statement objects as responses
+    \item Reads from Storage Module
+\end{itemize}
+
+\subsection{Storage Module Components}
+\begin{itemize}[nosep]
+    \item CRUD operations for stored responses
+    \item Requires DB credentials
+    \item SQL module is primary implementation
+\end{itemize}
+
+\subsection{Logic Module Components}
+\begin{itemize}[nosep]
+    \item Compares user statements with known statements
+    \item Uses similarity thresholds and exclusion rules
+    \item Selects closest-matching response
+\end{itemize}
+
+
+
+%----------------- 8. DATABASE DESIGN -----------------%
+\section{Database Design}
+
+A MySQL database stores the crawled website data.
+
+\subsection*{Key Table: \texttt{termUrlKeywords}}
+Approximately 300,000 records.
+\begin{itemize}[nosep]
+    \item Columns: \texttt{term}, \texttt{URL}, \texttt{keywords}
+\end{itemize}
+
+Additional tables contain faculty information and classifier labels.
+
+Database enables fast keyword matching, URL lookup, and long-term storage.
+
+
+
+%----------------- 9. USER INTERFACE -----------------%
+\section{User Interface}
+
+\subsection{Overview}
+\begin{itemize}[nosep]
+    \item Simple chat-style interface built with React
+    \item Input box for queries
+    \item Response window for answers and links
+\end{itemize}
+
+\subsection{Future Enhancements}
+\begin{itemize}[nosep]
+    \item Richer UI components
+    \item Improved accessibility
+\end{itemize}
+
+
+
+%----------------- 10. VALIDATION & VERIFICATION -----------------%
+\section{Requirements Validation \& Verification}
+
+\begin{itemize}[nosep]
+    \item Unit tests for crawler, NLP, and storage
+    \item Integration tests for full query flow
+    \item User testing for clarity and accuracy
+\end{itemize}
+
+
+
+%----------------- 11. GLOSSARY -----------------%
+\section{Glossary}
+
+\begin{itemize}[nosep]
+    \item \textbf{Statement}: Processed user input
+    \item \textbf{Intent}: Interpreted purpose of a query
+    \item \textbf{Similarity Score}: Metric to select the closest matching response
+\end{itemize}
+
+
+
+%----------------- 12. REFERENCES -----------------%
+\section{References}
+
+Original Pineapple Chatbot documents, tutorials for Python NLP libraries, and MySQL documentation.
+
+\end{document}
