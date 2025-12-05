@@ -1,0 +1,128 @@
+
+\documentclass{article}
+
+\usepackage{geometry}
+\usepackage{indentfirst}
+\usepackage{fancyhdr}
+
+\pagestyle{fancy}
+\geometry{a4paper, margin=1in}
+
+\begin{document}
+
+\title{Snapshot Objectives}
+\author{Randy Coronado}
+\date{December 1st, 2025}
+
+\maketitle
+
+\section{Start Objective}
+\fancyhf{}
+\fancyhead[C]{Snapshot Objectives}
+\fancyfoot[C]{\thepage}
+
+Our start objective is what we want to cover for the first two months out of four for our project. For our project "Pineapple ChatBox" , we have already decided on our dependencies for Front-End and Back-End. 
+Tasks will be assigned evenly between 2 groups one for the Front-End and design and the other on the logic and Back-End.
+    Our current objective is to set up the main functions of the chatbox using spaCy. 
+
+\subsection{Front-End}
+\textbf{React}:  Main UI Framework. Offers many libraries and tools. Its Virtual DOM (Document Object
+Model) allows for efficient UI updates and only updates the real DOM, which serves as our UI, only
+when necessary. It is also component-based, which means that it is built from small, reusable pieces.
+This falls under the definition of modular. This makes it easier to create, clean, and maintain code.
+
+
+\subsection{Back-End}
+ 
+\textbf{MySql}: As an open source relational database management system, MySQL is also known for its robust and stable performance which is crucial for applications. MySQL can also scale to meet growing data and traffic demands.
+
+
+\textbf{Node.js}: Backend Framework for API Development. It is event-driven, meaning it responds to specified occurrences rather than executing the code upon starting up. Offers thousands of npm packages to assist with development. It is also scalable. It will also be how we connect to our databases.
+
+\section{First Checkpoint}
+
+Following construction of the basic UI and API communication, the next objective is to integrate system modules and implement early-stage functionality.
+
+\subsection{System Functionality}
+
+Key module interactions:
+\begin{itemize}
+    \item Convert user input to Statement objects using the Input Module.
+    \item Clean and filter text using SDD-defined preprocessors.
+    \item Send processed statements to the Logic Module for interpretation.
+    \item Query the MySQL database via the Storage Module.
+\end{itemize}
+
+\subsection{Contact Page}
+
+A Contact Us page will be created to allow users to submit:
+\begin{itemize}
+    \item Name
+    \item Email
+    \item Message
+\end{itemize}
+
+
+\section{Second Checkpoint}
+
+Checkpoint 2 focuses on improving system accuracy and expanding data interpretation capabilities.
+
+\subsection{Logic Module Enhancements}
+
+Enhancements include:
+\begin{itemize}
+    \item Improved keyword extraction using spaCy.
+    \item Higher-confidence statement comparison functions.
+    \item Incorporation of Bayesian classification models referenced in the SDD.
+\end{itemize}
+
+\subsection{Database Expansion}
+
+Database improvements based on the SDD:
+\begin{itemize}
+    \item Expanding keyword and URL mappings.
+    \item Updating crawled content.
+    \item Reducing redundant rows in the \texttt{termXurlXkeywords} table.
+\end{itemize}
+
+\subsection{FAQ Page}
+
+A Frequently Asked Questions page will be developed to reduce recurring user support issues and improve system usability.
+
+\section{Final Checkpoint}
+
+The final checkpoint focuses on refinement and optimization of the entire Pineapple ChatBox system.
+
+\subsection{Front-End Improvements}
+
+\begin{itemize}
+    \item Performance optimization for faster rendering.
+    \item Enhanced accessibility to comply with W3C standards.
+    \item UI polishing for readability and usability.
+\end{itemize}
+
+\subsection{Back-End Improvements}
+
+\begin{itemize}
+    \item MySQL indexing and retrieval optimization.
+    \item Enhanced Logic Module accuracy.
+    \item Reduced latency across all server interactions.
+    \item Reliable integration between React, Node.js, and Python systems.
+\end{itemize}
+
+\subsection{System Stability}
+
+\begin{itemize}
+    \item Ensuring virtual machine consistency.
+    \item Validating server startup procedures.
+    \item Conducting requirement verification based on SDD criteria.
+\end{itemize}
+
+\section{Conclusion}
+
+While we are happy with the product we have, more advance features are missing like spell check and 100 percent, and can give wrong responses especially if the query is not specific enough.
+
+
+The team is proud of the progress made and remains committed to advancing the system to improve user access to campus information.
+
+\end{document}
