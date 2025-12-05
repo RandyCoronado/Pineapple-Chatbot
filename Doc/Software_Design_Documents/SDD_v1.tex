@@ -1,0 +1,168 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{enumitem}
+\usepackage{setspace}
+\usepackage{graphicx}
+
+\setlength{\parskip}{0.6em}
+\setlength{\parindent}{0pt}
+\setcounter{secnumdepth}{3}
+
+\begin{document}
+
+%----------------- TITLE PAGE -----------------%
+\begin{titlepage}
+    \centering
+    \vspace*{3cm}
+
+    {\Large \textbf{Software Design Document}\par}
+    \vspace{0.5cm}
+    {\LARGE \textbf{Pineapple Chatbot}\par}
+
+    \vspace{1.5cm}
+    {\large Prepared by\par}
+    \vspace{0.5cm}
+    {\large Kuong Thong, Enrique Castillo, Julio Aguilar, Jose Lopez, Yilin Ruan\par}
+
+    \vfill
+    {\large CSULA ITS Department\par}
+    \vspace*{1cm}
+\end{titlepage}
+
+%----------------- VERSION HISTORY -----------------%
+\section*{Version History}
+
+\begin{longtable}{>{\raggedright\arraybackslash}p{3cm}%
+                  >{\raggedright\arraybackslash}p{3cm}%
+                  >{\raggedright\arraybackslash}p{8cm}}
+\textbf{Version} & \textbf{Date} & \textbf{Summary of Changes} \\
+\hline
+apple      & 12/4/18 & Added Introduction sections (1.1--1.2). \\
+banana     & 12/5/18 & Added early DFD diagrams and transferred initial design content. \\
+cantaloupe & 12/6/18 & Added database design and sections 8--9.1. \\
+dates      & 12/7/18 & Completed document draft and added validation sections. \\
+\end{longtable}
+
+\newpage
+\tableofcontents
+\newpage
+
+%----------------- 1. INTRODUCTION -----------------%
+\section{Introduction}
+
+\subsection{Purpose}
+Pineapple Chatbot is an informational chatbot for a standalone web application that helps
+users find information related to the CSULA website. The chatbot processes user queries,
+responds with useful answers, and can receive user feedback.
+
+\subsection{Document Conventions}
+% Add any document style or notation conventions here.
+This document follows a standard Software Design Document (SDD) structure with numbered
+sections and subsections.
+
+\subsection{Intended Audience}
+This document is for developers, testers, designers, project managers, and documentation staff.
+
+\subsection{System Overview}
+Pineapple Chatbot receives natural-language queries from users, analyzes the text to determine
+intent and relevant keywords, retrieves matching information from a backend data store, and
+returns an appropriate response.
+
+%----------------- 4. SYSTEM ARCHITECTURE -----------------%
+\section{System Architecture}
+
+\subsection{Level 0 DFD}
+\begin{figure}[h!]
+    \centering
+    % Replace the filename below with the actual Level 0 DFD image file
+    \includegraphics[width=0.8\textwidth]{DFD_Level0_PineappleChatbot}
+    \caption{DFD -- Level 0 for Pineapple Chatbot}
+\end{figure}
+
+At a high level, the system receives user input, processes it through internal modules, and
+returns a response.
+
+\subsection{Level 1 DFD}
+\begin{figure}[h!]
+    \centering
+    % Replace the filename below with the actual Level 1 DFD image file
+    \includegraphics[width=\textwidth]{DFD_Level1_PineappleChatbot}
+    \caption{DFD -- Level 1 for Pineapple Chatbot}
+\end{figure}
+
+The system consists of five major modules:
+\begin{enumerate}[nosep]
+    \item \textbf{Input Module} -- Collects user inputs.
+    \item \textbf{Preprocessor Module} -- Cleans and normalizes text.
+    \item \textbf{Logic Module} -- Identifies user intent, keywords, and selects a response.
+    \item \textbf{Storage Module} -- Stores and retrieves crawled data and responses.
+    \item \textbf{Output Module} -- Formats and returns the final answer to the user.
+\end{enumerate}
+
+\subsection*{Data Flow Summary}
+User query $\rightarrow$ Preprocessing $\rightarrow$ Intent recognition $\rightarrow$ Keyword lookup
+$\rightarrow$ Data retrieval $\rightarrow$ Response $\rightarrow$ User.
+
+%----------------- 8. DATABASE DESIGN -----------------%
+\section{Database Design}
+
+A MySQL database stores the crawled website data and related information required by the
+chatbot.
+
+\subsection*{Key Table: \texttt{termUrlKeywords} (approximately 300{,}000 records)}
+\begin{itemize}[nosep]
+    \item \textbf{Columns:}
+    \begin{itemize}[nosep]
+        \item \texttt{term}
+        \item \texttt{URL}
+        \item \texttt{keywords}
+    \end{itemize}
+\end{itemize}
+
+Additional tables store faculty information and labels for the Bayesian classifier.
+
+The database enables:
+\begin{itemize}[nosep]
+    \item Fast keyword matching
+    \item Efficient URL lookup
+    \item Long-term storage of crawled data
+\end{itemize}
+
+%----------------- 9. USER INTERFACE -----------------%
+\section{User Interface}
+
+The Pineapple Chatbot user interface is designed as a simple, web-based chat interface.
+
+\subsection*{Overview}
+\begin{itemize}[nosep]
+    \item Simple chat-style interface built with React.
+    \item Input box for user queries.
+    \item Response window for answers and links.
+\end{itemize}
+
+\subsection*{Future Enhancements}
+\begin{itemize}[nosep]
+    \item Richer UI components (e.g., quick-reply buttons, suggested queries).
+    \item Improved accessibility and compliance with web accessibility standards.
+\end{itemize}
+
+%----------------- 11. GLOSSARY -----------------%
+\section{Glossary}
+
+\begin{itemize}[nosep]
+    \item \textbf{Statement}: Object representing a processed user input.
+    \item \textbf{Intent}: The interpreted purpose of a user query.
+    \item \textbf{Similarity Score}: Metric used to choose the closest matching response.
+\end{itemize}
+
+%----------------- 12. REFERENCES -----------------%
+\section{References}
+
+Original Pineapple Chatbot design documents, tutorials for Python NLP libraries, and MySQL
+documentation.
+
+\end{document}
