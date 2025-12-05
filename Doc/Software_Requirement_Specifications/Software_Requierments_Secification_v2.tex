@@ -1,0 +1,311 @@
+\documentclass[12pt]{article}
+\usepackage{geometry}
+\geometry{margin=1in}
+\usepackage{setspace}
+\usepackage{titlesec}
+\usepackage{hyperref}
+\usepackage{enumitem}
+
+\title{Software Requirements Specification \\ \large{Pineapple Chatbot} \\ Version 2.0}
+\author{Kuong Thong, Enrique Castillo, Julio Aguilar, Jose Lopez, Yilin Ruan \\ CSULA ITS Department}
+\date{March 22, 2020}
+
+\begin{document}
+
+\maketitle
+\newpage
+
+\tableofcontents
+\newpage
+
+\section*{Revision History}
+\begin{center}
+\begin{tabular}{|c|c|p{7cm}|c|}
+\hline
+\textbf{Name} & \textbf{Date} & \textbf{Description} & \textbf{Version} \\
+\hline
+Initial Draft & TBD & Initial skeleton draft created for Snapshot 1 & 1.0 \\
+\hline
+Expanded Draft & TBD & Added detailed requirements, Bayesian model, database structure, UI, updated constraints & 2.0 \\
+\hline
+\end{tabular}
+\end{center}
+\newpage
+
+\section{Introduction}
+
+\subsection{Purpose}
+The Pineapple Chatbot provides general information extracted from pages across the 
+\texttt{calstatela.edu} domain. Version 2.0 expands the chatbot’s functionality by adding Bayesian 
+classification, improved NLP accuracy, early UI elements, and a transition from static links to a 
+structured database.
+
+\subsection{Intended Audience and Reading Suggestions}
+This document is intended for developers, testers, marketing staff, project managers, and documentation authors.  
+Readers seeking to understand how the chatbot works should read the entire document from top to bottom.
+
+Testers should review the requirement list and data flow diagrams.  
+Customers may review the capabilities of the Pineapple Chatbot.  
+Investors may examine the product description and future goals.
+
+\subsection{Product Scope}
+The Pineapple Chatbot uses NLP techniques (primarily spaCy) and simple statistical models to 
+interpret user intent and provide the most relevant webpage or text-based response.
+
+Version 2.0 includes:
+\begin{itemize}
+\item Entity extraction using spaCy
+\item Intent identification
+\item Expanded link scoring model (Bayesian + keyword scoring)
+\item Early-stage user interface
+\item Integration with a preliminary URL database
+\item Improved handling of unclear queries
+\item Queueing of user inputs
+\end{itemize}
+
+\subsection{Definitions, Acronyms, and Abbreviations}
+\begin{itemize}
+\item \textbf{Bayesian Model} – Statistical classifier comparing keywords with category distributions.
+\item \textbf{Keyword Reduction} – Removing stop-words to isolate meaningful terms.
+\item \textbf{Category Boosting} – Increasing link scoring weight based on category match.
+\item \textbf{NER} – Named Entity Recognition.
+\end{itemize}
+
+\subsection{References}
+\begin{itemize}
+\item spaCy Documentation
+\item Python Standard Library
+\item Naive Bayes text classification examples
+\item CSULA website structure and categories
+\end{itemize}
+
+\newpage
+\section{Overall Description}
+
+\subsection{Product Perspective}
+Pineapple Chatbot is a standalone web-based chatbot connected to backend NLP models.  
+It currently runs locally with minimal UI; future versions will use a hosted deployment.
+
+\subsection{Product Functions}
+
+\subsubsection*{User Functions}
+\begin{itemize}
+\item Submit questions through the web interface
+\item Receive chatbot replies through chat bubbles
+\item Receive links or direct answers for professor-related queries
+\end{itemize}
+
+\subsubsection*{System Functions (New)}
+\begin{itemize}
+\item Bayesian classification of queries
+\item Keyword extraction and stop-word filtering
+\item Category matching
+\item URL ranking using hybrid scoring
+\item URL storage and retrieval from SQL database
+\end{itemize}
+
+\subsection{User Classes and Characteristics}
+\textbf{General Users:} Students using the chatbot for quick campus resource lookup.  
+\textbf{Developers:} Maintain NLP code, database structure, and UI logic.  
+\textbf{Testers:} Validate classification accuracy and link relevance; create TestRail cases.
+
+\subsection{Operating Environment}
+\begin{itemize}
+\item Python 3.x
+\item spaCy NLP models
+\item Web server (Node, Flask)
+\item MySQL or SQLite database
+\item Chrome, Firefox, Edge
+\end{itemize}
+
+\subsection{Design and Implementation Constraints}
+\begin{itemize}
+\item English-only supported
+\item Entity accuracy limited by spaCy model
+\item Website not mobile-optimized
+\item VPN may be required for hosting
+\item Link dataset must be updated periodically
+\item Response time depends on DB + model ranking
+\end{itemize}
+
+\subsection{User Documentation}
+No user manuals yet. Chatbot will be published on the CSULA website.
+
+\subsection{Assumptions and Dependencies}
+\begin{itemize}
+\item CSULA website structure remains consistent
+\item spaCy NER model can detect PERSON, ORG, etc.
+\item Database is reachable
+\item User questions use general English grammar
+\end{itemize}
+
+\newpage
+\section{External Interface Requirements}
+
+\subsection{User Interfaces}
+Version 2.0 includes a basic web UI:
+
+\textbf{Components:}
+\begin{itemize}
+\item Text input field
+\item Send button
+\item Scrollable chat window
+\item Chat bubbles
+\end{itemize}
+
+\textbf{Behavior:}
+\begin{itemize}
+\item Auto-scroll
+\item Loading indicator
+\item Responses may include text + clickable links
+\end{itemize}
+
+\subsection{Hardware Interfaces}
+\begin{itemize}
+\item Standard laptop/desktop
+\item Internet access
+\end{itemize}
+
+\subsection{Software Interfaces}
+\begin{itemize}
+\item spaCy NLP library
+\item MySQL database
+\item REST API returning JSON
+\item Python NLP backend
+\end{itemize}
+
+\subsection{Communications Interfaces}
+Internet access required. VPN may be required.  
+Internet Explorer is not supported (Chrome, Firefox, Edge recommended).
+
+\newpage
+\section{Requirements Specification}
+
+\subsection{Functional Requirements}
+
+\subsubsection*{1. Input Module}
+\begin{enumerate}[label=1.\arabic*]
+\item System shall accept user text input.
+\item Module should allow user feedback on answers.
+\item System may allow multi-sentence input.
+\end{enumerate}
+
+\subsubsection*{2. Output Module}
+\begin{enumerate}[label=2.\arabic*]
+\item Display user’s question back to them.
+\item Include a clickable link where available.
+\item Display error message for unknown queries.
+\end{enumerate}
+
+\subsubsection*{3. Logic Module}
+\begin{enumerate}[label=3.\arabic*]
+\item Parse user input for keywords.
+\item Recognize intent using spaCy.
+\item Respond appropriately even to unclear input.
+\item Send keywords and intent to storage module.
+\item Receive list of URLs from storage module.
+\item Determine the most relevant URL.
+\item Send entity, intent, keywords to data extraction module.
+\end{enumerate}
+
+\subsubsection*{4. Data Extraction Module}
+\begin{enumerate}[label=4.\arabic*]
+\item Extract correct information from URLs.
+\item Send extracted information to output module.
+\item Parse and organize text; use spaCy for labeling.
+\end{enumerate}
+
+\subsubsection*{5. Storage Module}
+\begin{enumerate}[label=5.\arabic*]
+\item Send database queries.
+\item Receive responses.
+\item Return data to logic module.
+\end{enumerate}
+
+\subsection{External Interface Requirements}
+\begin{itemize}
+\item Web input must support English text.
+\item URL responses must be HTML-safe.
+\item Chat must support sequential message queues.
+\end{itemize}
+
+\subsection{Logical Database Requirements}
+
+\textbf{Database Tables:}
+
+\begin{itemize}
+\item \textbf{urls}
+\begin{itemize}
+\item id
+\item url
+\item keywords
+\item category
+\end{itemize}
+
+\item \textbf{categories}
+\begin{itemize}
+\item category\_id
+\item name
+\item keyword\_distribution
+\end{itemize}
+\end{itemize}
+
+\textbf{Requirements:}
+\begin{itemize}
+\item Full-text search support
+\item Batch inserts allowed
+\item At least 500+ URL entries
+\end{itemize}
+
+\subsection{Design Constraints}
+\begin{itemize}
+\item spaCy model loads at startup
+\item Queries must finish under 3 seconds
+\item Category scoring accuracy 80–90\%
+\end{itemize}
+
+\newpage
+\section{Other Nonfunctional Requirements}
+
+\subsection{Performance Requirements}
+\begin{itemize}
+\item System response time: 1–3 seconds
+\item DB query time: under 200ms
+\item UI remains responsive during backend calls
+\end{itemize}
+
+\subsection{Safety Requirements}
+Feedback system must protect user identity.  
+Chatbot must not expose sensitive information or unsafe guidance.
+
+\subsection{Security Requirements}
+\begin{itemize}
+\item Sanitize all input
+\item DB requires authentication
+\item HTTPS required once deployed
+\item Admin interface requires login
+\end{itemize}
+
+\subsection{Software Quality Attributes}
+\begin{itemize}
+\item Usability: Simple chat interface
+\item Reliability: Consistent NLP responses
+\item Maintainability: Modular architecture
+\item Scalability: Database expandable
+\end{itemize}
+
+\subsection{Business Rules}
+\begin{itemize}
+\item Bot must prioritize official CSULA info
+\item All answers must come from \texttt{calstatela.edu}
+\item Professor data must remain accurate
+\end{itemize}
+
+\section{Other Requirements}
+Not applicable.
+
+\begin{center}
+\textbf{END OF VERSION 2.0}
+\end{center}
+
+\end{document}
