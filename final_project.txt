@@ -1,1 +1,2 @@
 https://github.com/RandyCoronado/Pineapple-Chatbot/tree/main
+Jira link - https://calstatela-cs3338-fall-team20.atlassian.net/jira/software/projects/PCS/boards/166
