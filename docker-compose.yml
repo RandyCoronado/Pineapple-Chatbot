@@ -1,0 +1,13 @@
+version: "3.9"
+
+services:
+  web:
+    image: nginx:alpine
+    container_name: pineapple-web
+    ports:
+      - "8080:80"
+    volumes:
+      # 把你的前端静态页面挂进 Nginx
+      - ./src:/usr/share/nginx/html:ro
+      - ./assests:/usr/share/nginx/html/assests
+    restart: unless-stopped
