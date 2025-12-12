@@ -1,6 +1,6 @@
 IMPORTANT: This project does not officially represent the Pineapple Chatbox project in any capacity. This project is using it as a template as we test our expertise in various tools including: GitHub, Docker, Jira, TestRail, and LaTeX, for CS 3338: Software Engineer Tools, a class in Cal State LA.
 
-Jira Link (MEANT FOR INSTRUCTOR):https://calstatela-cs3338-fall-team20.atlassian.net/jira/software/projects/PC/boards/100
+Jira Link (MEANT FOR INSTRUCTOR):https://calstatela-cs3338-fall-team20.atlassian.net/jira/software/projects/PCS/boards/166
 
 The system processes user queries through a natural language understanding pipeline powered by the spaCy machine learning library. When a user submits a question, the text is first analyzed to identify named entities and semantic intent. For example, in the query “What is Randy’s email?”, spaCy correctly recognizes “Randy” as an entity of type PERSON.
 
